@@ -184,22 +184,51 @@ function randomizeAnimalPositions(pageId) {
     }
 
     if (pageId === 'halaman-darat') {
-        // Bagi lebar menjadi zona per hewan agar tidak saling tumpuk
-        const count = items.length;
-        const zoneW = W / count;
+        const count = items.length; // 6 hewan
 
-        items.forEach((item, i) => {
-            const minLeft = i * zoneW + 10;
-            const maxLeft = Math.min((i + 1) * zoneW - ITEM_W - 10, W - ITEM_W - 10);
-            const left    = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
+        // Mobile/Tablet portrait → grid 2 baris × 3 kolom agar tidak berhimpitan
+        if (!isLandscape && window.innerWidth <= 768) {
+            const COLS    = 3;
+            const ROWS    = 2;
+            const TOP_SAFE = 90;  // bersih dari logo & tombol
+            const PAD     = 8;
 
-            // bottom: 60-150px → hewan jelas berdiri di atas tanah, tidak terpotong
-            const bottom  = 60 + Math.random() * 90;
+            // Baris atas: area tengah; baris bawah: dekat tanah
+            const rowTopStart  = [TOP_SAFE, H - ITEM_H - 30];
+            const rowTopRange  = [80, 50]; // variasi vertikal per baris
 
-            item.style.left   = left + 'px';
-            item.style.bottom = bottom + 'px';
-            item.style.top    = '';
-        });
+            const cellW = (W - PAD * 2) / COLS;
+
+            items.forEach((item, i) => {
+                const col = i % COLS;
+                const row = Math.floor(i / COLS);
+
+                const minLeft = PAD + col * cellW;
+                const maxLeft = Math.max(minLeft, PAD + col * cellW + cellW - ITEM_W - PAD);
+                const left    = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
+
+                const top = rowTopStart[row] + Math.random() * rowTopRange[row];
+
+                item.style.left   = left + 'px';
+                item.style.top    = top  + 'px';
+                item.style.bottom = '';
+            });
+
+        } else {
+            // Desktop / landscape → 1 baris di bawah
+            const zoneW = W / count;
+
+            items.forEach((item, i) => {
+                const minLeft = i * zoneW + 10;
+                const maxLeft = Math.min((i + 1) * zoneW - ITEM_W - 10, W - ITEM_W - 10);
+                const left    = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
+                const bottom  = 60 + Math.random() * 90;
+
+                item.style.left   = left + 'px';
+                item.style.bottom = bottom + 'px';
+                item.style.top    = '';
+            });
+        }
 
     } else if (pageId === 'halaman-udara') {
         // Udara punya 6 hewan → grid zona 2 baris × 3 kolom agar tidak pernah overlap

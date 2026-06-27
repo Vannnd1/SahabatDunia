@@ -38,36 +38,48 @@ body, html {
     z-index: 10;
 }
 
-/* Backgrounds */
+/* Backgrounds — langsung pada section agar tidak terganggu z-index stacking context */
+#halaman-awal {
+    background-image: url('asset/background/BackgroundHalamanLanding.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#halaman-menu {
+    background-image: url('asset/background/BackgroundHalamanMenu.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#halaman-darat {
+    background-image: url('asset/background/BackgoundHalamanDarat.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#halaman-laut {
+    background-image: url('asset/background/BackgroundHalamanLaut.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#halaman-udara {
+    background-image: url('asset/background/BackgoundHalamanUdara.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Background overlay divs — tetap ada sebagai pelapis, z-index: 0 */
 .background-awal, .background-menu, .background-darat, .background-laut, .background-udara {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 0;
     background-size: cover;
     background-position: center;
-}
-
-.background-awal {
-    background-image: url('asset/background/BackgroundHalamanLanding.png');
-}
-
-.background-menu {
-    background-image: url('asset/background/BackgroundHalamanMenu.png');
-}
-
-.background-darat {
-    background-image: url('asset/background/BackgoundHalamanDarat.png');
-}
-
-.background-laut {
-    background-image: url('asset/background/BackgroundHalamanLaut.png');
-}
-
-.background-udara {
-    background-image: url('asset/background/BackgoundHalamanUdara.png');
+    pointer-events: none;
 }
 
 /* UI Elements */
@@ -78,6 +90,8 @@ body, html {
     justify-content: center;
     height: 100%;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .logo-image {
@@ -190,6 +204,7 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    z-index: 1;
 }
 
 .animal-item {

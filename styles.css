@@ -209,15 +209,15 @@ body, html {
 }
 
 .animal-item img {
-    width: 190px;
-    height: 190px;
+    width: 270px;
+    height: 270px;
     object-fit: contain;
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
 }
 
 .animal-name {
-    margin-top: 6px;
-    font-size: 1.2rem;
+    margin-top: 8px;
+    font-size: 1.6rem;
     font-weight: bold;
     color: white;
     text-shadow:

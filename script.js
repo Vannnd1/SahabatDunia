@@ -128,9 +128,9 @@ function randomizeAnimalPositions(pageId) {
     const W = container.offsetWidth;
     const H = container.offsetHeight;
 
-    // Sesuaikan dengan ukuran gambar 190px + label ~32px
-    const ITEM_W = 210;
-    const ITEM_H = 240;
+    // Sesuaikan dengan ukuran gambar 270px + label ~40px
+    const ITEM_W = 290;
+    const ITEM_H = 320;
 
     // Shuffle agar urutan visual juga acak tiap kunjungan
     for (let i = items.length - 1; i > 0; i--) {

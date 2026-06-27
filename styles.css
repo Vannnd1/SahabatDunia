@@ -194,12 +194,14 @@ body, html {
 
 .animal-item {
     position: absolute;
+    width: 300px;
     cursor: pointer;
     transition: transform 0.3s, filter 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
     user-select: none;
+    gap: 0;
 }
 
 .animal-item:hover {
@@ -213,11 +215,13 @@ body, html {
     height: 270px;
     object-fit: contain;
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    display: block;
+    margin-bottom: 0;
 }
 
 .animal-name {
-    margin-top: 8px;
-    font-size: 1.6rem;
+    margin-top: 6px;
+    font-size: 1.5rem;
     font-weight: bold;
     color: white;
     text-shadow:
@@ -228,6 +232,7 @@ body, html {
     text-align: center;
     letter-spacing: 0.5px;
     white-space: nowrap;
+    line-height: 1.2;
 }
 
 /* ─── Sound Widget ──────────────────────────────────────────────── */

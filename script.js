@@ -129,7 +129,7 @@ function randomizeAnimalPositions(pageId) {
     const H = container.offsetHeight;
 
     // Sesuaikan dengan ukuran gambar 270px + label ~40px
-    const ITEM_W = 290;
+    const ITEM_W = 300;
     const ITEM_H = 320;
 
     // Shuffle agar urutan visual juga acak tiap kunjungan

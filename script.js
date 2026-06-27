@@ -186,31 +186,31 @@ function randomizeAnimalPositions(pageId) {
     if (pageId === 'halaman-darat') {
         const count = items.length; // 6 hewan
 
-        // Mobile/Tablet portrait → grid 2 baris × 3 kolom agar tidak berhimpitan
+        // Mobile/Tablet portrait → grid 2 KOLOM × 3 BARIS
+        // (cellW = (W-PAD*2)/2 ≈ 179px > ITEM_W 140px → tidak terpotong)
         if (!isLandscape && window.innerWidth <= 768) {
-            const COLS    = 3;
-            const ROWS    = 2;
-            const TOP_SAFE = 90;  // bersih dari logo & tombol
-            const PAD     = 8;
+            const COLS     = 2;
+            const PAD      = 12;
+            const TOP_SAFE = 90;   // hindari logo & tombol atas
 
-            // Baris atas: area tengah; baris bawah: dekat tanah
-            const rowTopStart  = [TOP_SAFE, H - ITEM_H - 30];
-            const rowTopRange  = [80, 50]; // variasi vertikal per baris
-
-            const cellW = (W - PAD * 2) / COLS;
+            const cellW = (W - PAD * 2) / COLS;            // ~179px di mobile
+            const usableH = H - TOP_SAFE - 10;
+            const cellH = usableH / 3;                     // 3 baris
 
             items.forEach((item, i) => {
                 const col = i % COLS;
                 const row = Math.floor(i / COLS);
 
-                const minLeft = PAD + col * cellW;
-                const maxLeft = Math.max(minLeft, PAD + col * cellW + cellW - ITEM_W - PAD);
-                const left    = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
+                // Posisi horizontal: tengah-tengahkan item di dalam cell
+                const cellLeft = PAD + col * cellW;
+                const left = cellLeft + (cellW - ITEM_W) / 2;
 
-                const top = rowTopStart[row] + Math.random() * rowTopRange[row];
+                // Posisi vertikal: tengah cell + sedikit acak
+                const cellTop = TOP_SAFE + row * cellH;
+                const top = cellTop + (cellH - ITEM_H) / 2 + (Math.random() - 0.5) * 20;
 
-                item.style.left   = left + 'px';
-                item.style.top    = top  + 'px';
+                item.style.left   = Math.max(PAD, Math.min(W - ITEM_W - PAD, left)) + 'px';
+                item.style.top    = Math.max(TOP_SAFE, top) + 'px';
                 item.style.bottom = '';
             });
 

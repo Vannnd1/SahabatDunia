@@ -112,6 +112,28 @@ window.addEventListener('DOMContentLoaded', () => {
     handleBacksound('halaman-awal');
 });
 
+// Hitung ulang posisi hewan saat orientasi layar berubah (portrait ↔ landscape)
+function recalcActiveAnimalPage() {
+    const animalPages = ['halaman-darat', 'halaman-laut', 'halaman-udara'];
+    for (const pageId of animalPages) {
+        const page = document.getElementById(pageId);
+        if (page && page.classList.contains('active')) {
+            randomizeAnimalPositions(pageId);
+            break;
+        }
+    }
+}
+
+window.addEventListener('orientationchange', () => {
+    // Tunggu browser selesai mengubah dimensi layar
+    setTimeout(recalcActiveAnimalPage, 300);
+});
+
+window.addEventListener('resize', () => {
+    clearTimeout(window._resizeTimer);
+    window._resizeTimer = setTimeout(recalcActiveAnimalPage, 250);
+});
+
 /**
  * Randomize posisi hewan:
  * - Darat  : zona horizontal → hewan di bagian bawah, tidak terpotong
@@ -128,17 +150,31 @@ function randomizeAnimalPositions(pageId) {
     const W = container.offsetWidth;
     const H = container.offsetHeight;
 
-    // Ukuran item disesuaikan dengan breakpoint layar
+    // Ukuran item disesuaikan dengan breakpoint layar & orientasi
     let ITEM_W, ITEM_H;
-    if (window.innerWidth <= 480) {
-        ITEM_W = 140;   // mobile: gambar 120px + padding
-        ITEM_H = 165;   // gambar 120px + label ~30px + margin
+    const isLandscape = window.innerWidth > window.innerHeight;
+    const shortHeight = window.innerHeight <= 500; // HP landscape
+
+    if (isLandscape && shortHeight) {
+        // HP landscape: gambar 110px
+        ITEM_W = 130;
+        ITEM_H = 150;
+    } else if (isLandscape && window.innerHeight <= 768) {
+        // Tablet landscape: gambar 150px
+        ITEM_W = 170;
+        ITEM_H = 195;
+    } else if (window.innerWidth <= 480) {
+        // Mobile portrait: gambar 120px
+        ITEM_W = 140;
+        ITEM_H = 165;
     } else if (window.innerWidth <= 768) {
-        ITEM_W = 200;   // tablet: gambar 180px + padding
-        ITEM_H = 220;   // gambar 180px + label ~30px + margin
+        // Tablet portrait: gambar 180px
+        ITEM_W = 200;
+        ITEM_H = 220;
     } else {
-        ITEM_W = 300;   // desktop: gambar 270px + padding
-        ITEM_H = 320;   // gambar 270px + label ~40px + margin
+        // Desktop: gambar 270px
+        ITEM_W = 300;
+        ITEM_H = 320;
     }
 
     // Shuffle agar urutan visual juga acak tiap kunjungan

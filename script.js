@@ -128,9 +128,18 @@ function randomizeAnimalPositions(pageId) {
     const W = container.offsetWidth;
     const H = container.offsetHeight;
 
-    // Sesuaikan dengan ukuran gambar 270px + label ~40px
-    const ITEM_W = 300;
-    const ITEM_H = 320;
+    // Ukuran item disesuaikan dengan breakpoint layar
+    let ITEM_W, ITEM_H;
+    if (window.innerWidth <= 480) {
+        ITEM_W = 140;   // mobile: gambar 120px + padding
+        ITEM_H = 165;   // gambar 120px + label ~30px + margin
+    } else if (window.innerWidth <= 768) {
+        ITEM_W = 200;   // tablet: gambar 180px + padding
+        ITEM_H = 220;   // gambar 180px + label ~30px + margin
+    } else {
+        ITEM_W = 300;   // desktop: gambar 270px + padding
+        ITEM_H = 320;   // gambar 270px + label ~40px + margin
+    }
 
     // Shuffle agar urutan visual juga acak tiap kunjungan
     for (let i = items.length - 1; i > 0; i--) {

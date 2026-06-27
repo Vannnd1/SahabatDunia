@@ -341,3 +341,163 @@ body, html {
 }
 /* ──────────────────────────────────────────────────────────────── */
 
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Tablet (max-width: 768px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+    /* Logo utama halaman awal */
+    .logo-image {
+        max-width: 75%;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Logo kecil sudut kiri */
+    .logo-small-image {
+        max-width: 130px;
+        top: 12px;
+        left: 12px;
+    }
+
+    /* Tombol mulai */
+    .btn-start {
+        font-size: 1.8rem;
+        padding: 12px 30px;
+    }
+
+    /* Tombol kembali */
+    .btn-back {
+        font-size: 1.1rem;
+        padding: 8px 16px;
+        top: 12px;
+        right: 12px;
+    }
+
+    /* Menu card */
+    .menu-container {
+        gap: 20px;
+        padding: 0 16px;
+    }
+
+    .menu-card img {
+        max-width: 170px;
+    }
+
+    /* Animal item — gambar lebih kecil */
+    .animal-item {
+        width: 200px;
+    }
+
+    .animal-item img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .animal-name {
+        font-size: 1.15rem;
+        margin-top: 4px;
+    }
+
+    /* Sound widget */
+    .sound-widget {
+        bottom: 14px;
+        right: 14px;
+        padding: 6px 12px 6px 6px;
+    }
+
+    .btn-mute {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+
+    .volume-wrapper {
+        width: 80px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile (max-width: 480px)
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+
+    /* Logo utama halaman awal */
+    .logo-image {
+        max-width: 88%;
+        margin-bottom: 1rem;
+    }
+
+    /* Logo kecil sudut kiri */
+    .logo-small-image {
+        max-width: 90px;
+        top: 8px;
+        left: 8px;
+    }
+
+    /* Tombol mulai */
+    .btn-start {
+        font-size: 1.3rem;
+        padding: 10px 24px;
+        border-radius: 40px;
+    }
+
+    /* Tombol kembali */
+    .btn-back {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        top: 8px;
+        right: 8px;
+        border-radius: 20px;
+    }
+
+    /* Menu card — susun vertikal agar tidak terlalu sempit */
+    .menu-container {
+        flex-direction: column;
+        gap: 14px;
+        padding: 80px 16px 20px;
+        justify-content: center;
+        overflow-y: auto;
+    }
+
+    .menu-card img {
+        max-width: 200px;
+    }
+
+    /* Animal item — gambar lebih kecil lagi */
+    .animal-item {
+        width: 140px;
+    }
+
+    .animal-item img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .animal-name {
+        font-size: 0.9rem;
+        margin-top: 3px;
+        text-shadow:
+            -1px -1px 0 #000,
+             1px -1px 0 #000,
+            -1px  1px 0 #000,
+             1px  1px 0 #000;
+    }
+
+    /* Sound widget — lebih kecil */
+    .sound-widget {
+        bottom: 10px;
+        right: 10px;
+        padding: 5px 10px 5px 5px;
+        gap: 6px;
+    }
+
+    .btn-mute {
+        width: 30px;
+        height: 30px;
+        font-size: 0.95rem;
+    }
+
+    .volume-wrapper {
+        width: 64px;
+    }
+}

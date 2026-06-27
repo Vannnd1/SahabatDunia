@@ -156,17 +156,43 @@ function randomizeAnimalPositions(pageId) {
             item.style.top    = '';
         });
 
+    } else if (pageId === 'halaman-udara') {
+        // Udara punya 6 hewan → grid zona 2 baris × 3 kolom agar tidak pernah overlap
+        const COLS     = 3;
+        const ROWS     = 2;
+        const TOP_SAFE = 110;
+        const cellW    = (W - 20) / COLS;
+        const cellH    = (H - TOP_SAFE - 10) / ROWS;
+        const PAD      = 15; // padding dalam sel supaya tidak mepet tepi
+
+        items.forEach((item, i) => {
+            const col = i % COLS;
+            const row = Math.floor(i / COLS);
+
+            // Rentang aman di dalam sel
+            const minLeft = col * cellW + PAD;
+            const maxLeft = Math.max(minLeft, col * cellW + cellW - ITEM_W - PAD);
+            const minTop  = TOP_SAFE + row * cellH + PAD;
+            const maxTop  = Math.max(minTop, TOP_SAFE + row * cellH + cellH - ITEM_H - PAD);
+
+            const left = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
+            const top  = minTop  + Math.random() * Math.max(0, maxTop  - minTop);
+
+            item.style.left   = left + 'px';
+            item.style.top    = top  + 'px';
+            item.style.bottom = '';
+        });
+
     } else {
-        // Udara & Laut → bebas acak dengan anti-overlap
-        const TOP_SAFE = 110;   // hindari logo & tombol
-        const GAP      = 25;    // jarak minimum antar hewan
+        // Laut (3 hewan) → bebas acak dengan anti-overlap sudah cukup ruang
+        const TOP_SAFE = 110;
+        const GAP      = 25;
         const placed   = [];
 
         items.forEach(item => {
             let pos = null;
 
-            // Coba sampai 150x untuk menemukan posisi yang tidak tumpang tindih
-            for (let attempt = 0; attempt < 150; attempt++) {
+            for (let attempt = 0; attempt < 300; attempt++) {
                 const left = 15 + Math.random() * (W - ITEM_W - 30);
                 const top  = TOP_SAFE + Math.random() * (H - ITEM_H - TOP_SAFE - 15);
 
@@ -183,7 +209,6 @@ function randomizeAnimalPositions(pageId) {
                 }
             }
 
-            // Fallback jika benar-benar tidak ada ruang (sangat jarang)
             if (!pos) {
                 pos = {
                     left: 15 + Math.random() * (W - ITEM_W - 30),

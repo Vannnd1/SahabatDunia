@@ -7,17 +7,32 @@ let backsoundReady = false;
 function initBacksound() {
     const bs = document.getElementById('backsound');
     if (!bs) return;
-    bs.volume = 0.6; // volume default 60%
+    bs.volume = 0.6;
 
-    // Autoplay dibatasi browser → play saat user pertama kali klik
-    const unlockAudio = () => {
-        if (!backsoundReady) {
-            bs.play().catch(() => {});
-            backsoundReady = true;
-        }
-        document.removeEventListener('click', unlockAudio);
-    };
-    document.addEventListener('click', unlockAudio);
+    // Coba autoplay langsung — berhasil di desktop jika browser mengizinkan
+    bs.play().then(() => {
+        backsoundReady = true;
+    }).catch(() => {
+        // Browser blokir autoplay (umumnya mobile) →
+        // Unlock di klik PERTAMA menggunakan capture phase agar berjalan
+        // SEBELUM handler lain (seperti goToPage), sehingga musik langsung main
+        // saat tombol "TEKAN UNTUK MULAI" ditekan.
+        const unlockAudio = (e) => {
+            if (!backsoundReady) {
+                bs.play().then(() => {
+                    backsoundReady = true;
+                    // Cek apakah halaman aktif membutuhkan BGM, lalu mainkan
+                    const activePage = document.querySelector('.page.active');
+                    if (activePage && activePage.dataset.backsound === 'true' && !bs.muted) {
+                        bs.play().catch(() => {});
+                    }
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', unlockAudio, true);
+        };
+        // Gunakan capture: true agar ini JALAN DULUAN sebelum onclick button
+        document.addEventListener('click', unlockAudio, true);
+    });
 }
 
 function handleBacksound(pageId) {

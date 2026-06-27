@@ -1,0 +1,231 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', sans-serif;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f0f8ff;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Page Navigation */
+.page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
+    z-index: 1;
+}
+
+.page.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+}
+
+/* Backgrounds */
+.background-awal, .background-menu, .background-darat, .background-laut, .background-udara {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+}
+
+.background-awal {
+    background-image: url('asset/background/BackgroundHalamanLanding.png');
+}
+
+.background-menu {
+    background-image: url('asset/background/BackgroundHalamanMenu.png');
+}
+
+.background-darat {
+    background-image: url('asset/background/BackgoundHalamanDarat.png');
+}
+
+.background-laut {
+    background-image: url('asset/background/BackgroundHalamanLaut.png');
+}
+
+.background-udara {
+    background-image: url('asset/background/BackgoundHalamanUdara.png');
+}
+
+/* UI Elements */
+.content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.logo-image {
+    max-width: 60%;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+}
+
+.logo-small-image {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    max-width: 200px;
+    height: auto;
+    z-index: 20;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+}
+
+.btn-start {
+    font-size: 2.5rem;
+    padding: 15px 40px;
+    background-color: #FF8C00;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #CC7000, 0 15px 20px rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.1s;
+}
+
+.btn-start:active {
+    transform: translateY(8px);
+    box-shadow: 0 0 0 #CC7000, 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.btn-back {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #CC3700;
+    font-weight: bold;
+    z-index: 20;
+    transition: all 0.1s;
+}
+
+.btn-back:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #CC3700;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.bounce {
+    animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Menu Page */
+.menu-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 40px;
+    padding: 0 20px;
+}
+
+.menu-card {
+    cursor: pointer;
+    transition: transform 0.3s;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+}
+
+.menu-card:hover {
+    transform: translateY(-15px) scale(1.05);
+}
+
+.menu-card img {
+    max-width: 250px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Animal Pages */
+.animal-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.animal-item {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s, filter 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+}
+
+.animal-item:hover {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0px 10px 10px rgba(0,0,0,0.4));
+    z-index: 50;
+}
+
+.animal-item img {
+    width: 190px;
+    height: 190px;
+    object-fit: contain;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+}
+
+.animal-name {
+    margin-top: 6px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow:
+        -2px -2px 0 #000,
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000;
+    text-align: center;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}

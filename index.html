@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahabat Dunia - Belajar Hewan</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Halaman Awal -->
+        <section id="halaman-awal" class="page active">
+            <div class="background-awal"></div>
+            <div class="content-center">
+                <img src="asset/Logo/logoSahabatDunia.png" class="logo-image bounce" alt="Sahabat Dunia">
+                <button class="btn-start pulse" onclick="goToPage('halaman-menu')">TEKAN UNTUK MULAI</button>
+            </div>
+        </section>
+
+        <!-- Halaman Menu -->
+        <section id="halaman-menu" class="page">
+            <div class="background-menu"></div>
+            <button class="btn-back" onclick="goToPage('halaman-awal')">← Kembali</button>
+            <img src="asset/Logo/logoSahabatDunia.png" class="logo-small-image" alt="Sahabat Dunia">
+            
+            <div class="menu-container">
+                <div class="menu-card" onclick="goToPage('halaman-udara')">
+                    <img src="asset/CardMenu/CardUdara.png" alt="Hewan Udara">
+                </div>
+                <div class="menu-card" onclick="goToPage('halaman-darat')">
+                    <img src="asset/CardMenu/CardDarat.png" alt="Hewan Darat">
+                </div>
+                <div class="menu-card" onclick="goToPage('halaman-laut')">
+                    <img src="asset/CardMenu/CardLaut.png" alt="Hewan Laut">
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Hewan Darat -->
+        <section id="halaman-darat" class="page">
+            <div class="background-darat"></div>
+            <button class="btn-back" onclick="goToPage('halaman-menu')">← Kembali</button>
+            <img src="asset/Logo/logoSahabatDunia.png" class="logo-small-image" alt="Sahabat Dunia">
+            
+            <div class="animal-container">
+                <div class="animal-item" onclick="playSound('SuaraAyam.mp3', 'Darat')">
+                    <img src="asset/animal/Darat/Ayam.png" alt="Ayam">
+                    <p class="animal-name">Ayam</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraGajah.mp3', 'Darat')">
+                    <img src="asset/animal/Darat/Gajah.png" alt="Gajah">
+                    <p class="animal-name">Gajah</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraKambing.mp3', 'Darat')">
+                    <img src="asset/animal/Darat/Kambing.png" alt="Kambing">
+                    <p class="animal-name">Kambing</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraKudaNil.mp3', 'Darat')">
+                    <img src="asset/animal/Darat/KudaNil.png" alt="Kuda Nil">
+                    <p class="animal-name">Kuda Nil</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraSapi.mp3', 'Darat')">
+                    <img src="asset/animal/Darat/Sapi.png" alt="Sapi">
+                    <p class="animal-name">Sapi</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraSinga.mp3', 'Darat')">
+                    <img src="asset/animal/Darat/Singa.png" alt="Singa">
+                    <p class="animal-name">Singa</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Hewan Laut -->
+        <section id="halaman-laut" class="page">
+            <div class="background-laut"></div>
+            <button class="btn-back" onclick="goToPage('halaman-menu')">← Kembali</button>
+            <img src="asset/Logo/logoSahabatDunia.png" class="logo-small-image" alt="Sahabat Dunia">
+            
+            <div class="animal-container">
+                <div class="animal-item" onclick="playSound('SuaraAnjingLaut.mp3', 'Laut')">
+                    <img src="asset/animal/Laut/AnjingLaut.png" alt="Anjing Laut">
+                    <p class="animal-name">Anjing Laut</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraLumbaLumba.mp3', 'Laut')">
+                    <img src="asset/animal/Laut/LumbaLumba.png" alt="Lumba Lumba">
+                    <p class="animal-name">Lumba-Lumba</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraPaus.mp3', 'Laut')">
+                    <img src="asset/animal/Laut/PausOrca.png" alt="Paus Orca">
+                    <p class="animal-name">Paus Orca</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Halaman Hewan Udara -->
+        <section id="halaman-udara" class="page">
+            <div class="background-udara"></div>
+            <button class="btn-back" onclick="goToPage('halaman-menu')">← Kembali</button>
+            <img src="asset/Logo/logoSahabatDunia.png" class="logo-small-image" alt="Sahabat Dunia">
+            
+            <div class="animal-container">
+                <div class="animal-item" onclick="playSound('SuaraAngsa.mp3', 'Udara')">
+                    <img src="asset/animal/Udara/Angsa.png" alt="Angsa">
+                    <p class="animal-name">Angsa</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraCanary.mpeg', 'Udara')">
+                    <img src="asset/animal/Udara/Canary.png" alt="Canary">
+                    <p class="animal-name">Canary</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraElang.mp3', 'Udara')">
+                    <img src="asset/animal/Udara/Elang.png" alt="Elang">
+                    <p class="animal-name">Elang</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraBurungGagak.mp3', 'Udara')">
+                    <img src="asset/animal/Udara/Gagak.png" alt="Gagak">
+                    <p class="animal-name">Gagak</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraBurungHantu.mp3', 'Udara')">
+                    <img src="asset/animal/Udara/Owl.png" alt="Burung Hantu">
+                    <p class="animal-name">Burung Hantu</p>
+                </div>
+                <div class="animal-item" onclick="playSound('SuaraBurungTekukur.mp3', 'Udara')">
+                    <img src="asset/animal/Udara/Tekukur.png" alt="Tekukur">
+                    <p class="animal-name">Tekukur</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

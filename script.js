@@ -1,6 +1,83 @@
 // Audio cache to manage multiple sounds without creating new objects constantly
 const audioCache = {};
 
+// ─── Backsound ────────────────────────────────────────────────────
+let backsoundReady = false;
+
+function initBacksound() {
+    const bs = document.getElementById('backsound');
+    if (!bs) return;
+    bs.volume = 0.6; // volume default 60%
+
+    // Autoplay dibatasi browser → play saat user pertama kali klik
+    const unlockAudio = () => {
+        if (!backsoundReady) {
+            bs.play().catch(() => {});
+            backsoundReady = true;
+        }
+        document.removeEventListener('click', unlockAudio);
+    };
+    document.addEventListener('click', unlockAudio);
+}
+
+function handleBacksound(pageId) {
+    const bs = document.getElementById('backsound');
+    const widget = document.getElementById('sound-widget');
+    if (!bs || !widget) return;
+
+    const targetPage = document.getElementById(pageId);
+    const needsBGM = targetPage && targetPage.dataset.backsound === 'true';
+
+    if (needsBGM) {
+        widget.classList.remove('hidden');
+        if (backsoundReady && !bs.muted) {
+            bs.play().catch(() => {});
+        }
+    } else {
+        widget.classList.add('hidden');
+        bs.pause();
+    }
+}
+
+function toggleMute() {
+    const bs = document.getElementById('backsound');
+    const icon = document.getElementById('sound-icon');
+    if (!bs) return;
+
+    bs.muted = !bs.muted;
+    if (bs.muted) {
+        icon.textContent = '🔇';
+        bs.pause();
+    } else {
+        icon.textContent = '🔊';
+        bs.play().catch(() => {});
+    }
+}
+
+function setVolume(val) {
+    const bs = document.getElementById('backsound');
+    const icon = document.getElementById('sound-icon');
+    const slider = document.getElementById('volume-slider');
+    if (!bs) return;
+
+    const volume = val / 100;
+    bs.volume = volume;
+
+    // Update visual fill slider
+    if (slider) slider.style.background =
+        `linear-gradient(to right, #FF8C00 ${val}%, rgba(255,255,255,0.5) ${val}%)`;
+
+    if (volume === 0) {
+        bs.muted = true;
+        icon.textContent = '🔇';
+    } else {
+        bs.muted = false;
+        icon.textContent = '🔊';
+        if (backsoundReady) bs.play().catch(() => {});
+    }
+}
+// ──────────────────────────────────────────────────────────────────
+
 function goToPage(pageId) {
     // Hide all pages
     const pages = document.querySelectorAll('.page');
@@ -14,8 +91,11 @@ function goToPage(pageId) {
         selectedPage.classList.add('active');
     }
     
-    // Stop all playing sounds when navigating
+    // Stop all animal sounds when navigating
     stopAllSounds();
+
+    // Handle backsound play/pause sesuai halaman
+    handleBacksound(pageId);
 
     // Randomize positions saat masuk ke halaman hewan
     const animalPages = ['halaman-darat', 'halaman-laut', 'halaman-udara'];
@@ -24,6 +104,13 @@ function goToPage(pageId) {
         setTimeout(() => randomizeAnimalPositions(pageId), 60);
     }
 }
+
+// Init saat halaman pertama dimuat
+window.addEventListener('DOMContentLoaded', () => {
+    initBacksound();
+    // Landing page aktif pertama, tampilkan widget
+    handleBacksound('halaman-awal');
+});
 
 /**
  * Randomize posisi hewan:

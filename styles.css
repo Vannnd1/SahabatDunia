@@ -253,8 +253,8 @@ body, html {
 /* ─── Sound Widget ──────────────────────────────────────────────── */
 .sound-widget {
     position: fixed;
-    bottom: 24px;
-    left: 24px;
+    top: 20px;
+    left: 230px;
     z-index: 9999;
     display: flex;
     align-items: center;
@@ -277,7 +277,7 @@ body, html {
 }
 
 @keyframes widget-slide-in {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(-20px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 

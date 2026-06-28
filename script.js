@@ -138,19 +138,13 @@ window.addEventListener('resize', () => {
     window._resizeTimer = setTimeout(recalcActiveAnimalPage, 250);
 });
 
-// Jarak aman dari bawah layar agar tidak menimpa widget suara (bottom:24, tinggi ~75px)
-const WIDGET_CLEAR = 130; // px dari bawah layar
-
 /**
- * Cek apakah item bertabrakan dengan zona widget suara (pojok kiri bawah).
- * Widget lebar ~260px, zone safety = 300px.
+ * Cek apakah item bertabrakan dengan zona widget suara (pojok kiri atas, sudah dilindungi TOP_SAFE).
+ * Fungsi ini tetap ada untuk halaman Laut (random placement).
  */
 function isInWidgetZone(left, top, ITEM_W, ITEM_H, H) {
-    return (
-        left          < 300 &&
-        left + ITEM_W > 0   &&
-        top + ITEM_H  > H - WIDGET_CLEAR
-    );
+    // Widget sekarang di atas (top:20px) — TOP_SAFE sudah cukup, tidak perlu cek khusus
+    return false;
 }
 
 /**
@@ -225,11 +219,7 @@ function randomizeAnimalPositions(pageId) {
                 const left = cellLeft + (cellW - ITEM_W) / 2;
 
                 const cellTop = TOP_SAFE + row * cellH;
-                let top = cellTop + (cellH - ITEM_H) / 2 + (Math.random() - 0.5) * 20;
-
-                // Pastikan bottom edge tidak masuk zona widget
-                const maxTopAllowed = H - ITEM_H - WIDGET_CLEAR;
-                if (top > maxTopAllowed) top = maxTopAllowed;
+                const top = cellTop + (cellH - ITEM_H) / 2 + (Math.random() - 0.5) * 20;
 
                 item.style.left   = Math.max(PAD, Math.min(W - ITEM_W - PAD, left)) + 'px';
                 item.style.top    = Math.max(TOP_SAFE, top) + 'px';
@@ -244,9 +234,7 @@ function randomizeAnimalPositions(pageId) {
                 const minLeft = i * zoneW + 10;
                 const maxLeft = Math.min((i + 1) * zoneW - ITEM_W - 10, W - ITEM_W - 10);
                 const left    = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
-
-                // bottom min = WIDGET_CLEAR agar top+ITEM_H tidak masuk zona widget
-                const bottom = WIDGET_CLEAR + Math.random() * 60;
+                const bottom  = 60 + Math.random() * 90;
 
                 item.style.left   = left + 'px';
                 item.style.bottom = bottom + 'px';
@@ -270,11 +258,7 @@ function randomizeAnimalPositions(pageId) {
             const minLeft = col * cellW + PAD;
             const maxLeft = Math.max(minLeft, col * cellW + cellW - ITEM_W - PAD);
             const minTop  = TOP_SAFE + row * cellH + PAD;
-
-            // Semua sel dibatasi agar top + ITEM_H tidak masuk zona widget
-            const absMaxTop = H - ITEM_H - WIDGET_CLEAR;
-            let maxTop = Math.max(minTop, TOP_SAFE + row * cellH + cellH - ITEM_H - PAD);
-            maxTop = Math.min(maxTop, absMaxTop);
+            const maxTop  = Math.max(minTop, TOP_SAFE + row * cellH + cellH - ITEM_H - PAD);
 
             const left = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
             const top  = minTop  + Math.random() * Math.max(0, maxTop  - minTop);

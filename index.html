@@ -12,8 +12,8 @@
     <!-- Backsound Audio -->
     <audio id="backsound" src="asset/sound/Backsound_web.mp3" loop preload="auto"></audio>
 
-    <!-- Sound Control Widget (muncul di landing & menu) -->
-    <div id="sound-widget" class="sound-widget hidden">
+    <!-- Sound Control Widget (tampil di semua halaman) -->
+    <div id="sound-widget" class="sound-widget">
         <button id="btn-mute" class="btn-mute" onclick="toggleMute()" title="Mute / Unmute">
             <span id="sound-icon">🔊</span>
         </button>
@@ -24,7 +24,7 @@
     </div>
     <div id="app">
         <!-- Halaman Awal -->
-        <section id="halaman-awal" class="page active" data-backsound="true">
+        <section id="halaman-awal" class="page active">
             <div class="background-awal"></div>
             <div class="content-center">
                 <img src="asset/Logo/logoSahabatDunia.png" class="logo-image bounce" alt="Sahabat Dunia">
@@ -33,7 +33,7 @@
         </section>
 
         <!-- Halaman Menu -->
-        <section id="halaman-menu" class="page" data-backsound="true">
+        <section id="halaman-menu" class="page">
             <div class="background-menu"></div>
             <button class="btn-back" onclick="goToPage('halaman-awal')">← Kembali</button>
             <img src="asset/Logo/logoSahabatDunia.png" class="logo-small-image" alt="Sahabat Dunia">

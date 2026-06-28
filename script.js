@@ -35,22 +35,13 @@ function initBacksound() {
     });
 }
 
-function handleBacksound(pageId) {
+function handleBacksound() {
     const bs = document.getElementById('backsound');
-    const widget = document.getElementById('sound-widget');
-    if (!bs || !widget) return;
+    if (!bs) return;
 
-    const targetPage = document.getElementById(pageId);
-    const needsBGM = targetPage && targetPage.dataset.backsound === 'true';
-
-    if (needsBGM) {
-        widget.classList.remove('hidden');
-        if (backsoundReady && !bs.muted) {
-            bs.play().catch(() => {});
-        }
-    } else {
-        widget.classList.add('hidden');
-        bs.pause();
+    // Backsound selalu jalan di semua halaman
+    if (backsoundReady && !bs.muted) {
+        bs.play().catch(() => {});
     }
 }
 
@@ -109,8 +100,8 @@ function goToPage(pageId) {
     // Stop all animal sounds when navigating
     stopAllSounds();
 
-    // Handle backsound play/pause sesuai halaman
-    handleBacksound(pageId);
+    // Pastikan backsound tetap jalan di halaman baru
+    handleBacksound();
 
     // Randomize positions saat masuk ke halaman hewan
     const animalPages = ['halaman-darat', 'halaman-laut', 'halaman-udara'];
@@ -123,8 +114,6 @@ function goToPage(pageId) {
 // Init saat halaman pertama dimuat
 window.addEventListener('DOMContentLoaded', () => {
     initBacksound();
-    // Landing page aktif pertama, tampilkan widget
-    handleBacksound('halaman-awal');
 });
 
 // Hitung ulang posisi hewan saat orientasi layar berubah (portrait ↔ landscape)

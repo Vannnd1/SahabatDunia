@@ -139,9 +139,29 @@ window.addEventListener('resize', () => {
 });
 
 /**
+ * Cek apakah posisi (left, top) dari item (ITEM_W x ITEM_H) bertabrakan
+ * dengan zona widget suara di pojok kiri bawah.
+ * Widget: left=24, bottom=24 → top = H - 90 - 24, lebar ±260px
+ */
+function isInWidgetZone(left, top, ITEM_W, ITEM_H, H) {
+    const WZ_LEFT   = 0;
+    const WZ_RIGHT  = 300;   // widget lebar ~260px + safety
+    const WZ_TOP    = H - 120; // widget tinggi ~75px + safety
+    const WZ_BOTTOM = H;
+
+    return (
+        left            < WZ_RIGHT  &&
+        left + ITEM_W   > WZ_LEFT   &&
+        top             < WZ_BOTTOM &&
+        top  + ITEM_H   > WZ_TOP
+    );
+}
+
+/**
  * Randomize posisi hewan:
  * - Darat  : zona horizontal → hewan di bagian bawah, tidak terpotong
- * - Udara / Laut : bebas acak dengan anti-overlap
+ * - Udara  : grid 2×3
+ * - Laut   : bebas acak dengan anti-overlap
  */
 function randomizeAnimalPositions(pageId) {
     const page = document.getElementById(pageId);
@@ -226,7 +246,11 @@ function randomizeAnimalPositions(pageId) {
                 const minLeft = i * zoneW + 10;
                 const maxLeft = Math.min((i + 1) * zoneW - ITEM_W - 10, W - ITEM_W - 10);
                 const left    = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
-                const bottom  = 60 + Math.random() * 90;
+
+                // Geser bottom agar tidak menimpa widget di kiri bawah
+                // Kolom pertama (i===0): naikkan sedikit jika terlalu dekat bawah
+                let bottom = 60 + Math.random() * 90;
+                if (i === 0 && bottom < 110) bottom = 110; // zona widget tinggi ~90px
 
                 item.style.left   = left + 'px';
                 item.style.bottom = bottom + 'px';
@@ -251,7 +275,11 @@ function randomizeAnimalPositions(pageId) {
             const minLeft = col * cellW + PAD;
             const maxLeft = Math.max(minLeft, col * cellW + cellW - ITEM_W - PAD);
             const minTop  = TOP_SAFE + row * cellH + PAD;
-            const maxTop  = Math.max(minTop, TOP_SAFE + row * cellH + cellH - ITEM_H - PAD);
+            // Baris bawah kolom kiri (col=0, row=ROWS-1): hindari zona widget
+            let maxTop  = Math.max(minTop, TOP_SAFE + row * cellH + cellH - ITEM_H - PAD);
+            if (col === 0 && row === ROWS - 1) {
+                maxTop = Math.min(maxTop, H - ITEM_H - 120); // jaga dari widget
+            }
 
             const left = minLeft + Math.random() * Math.max(0, maxLeft - minLeft);
             const top  = minTop  + Math.random() * Math.max(0, maxTop  - minTop);
@@ -274,14 +302,15 @@ function randomizeAnimalPositions(pageId) {
                 const left = 15 + Math.random() * (W - ITEM_W - 30);
                 const top  = TOP_SAFE + Math.random() * (H - ITEM_H - TOP_SAFE - 15);
 
-                const overlaps = placed.some(p =>
+                const overlapsAnimal = placed.some(p =>
                     left < p.left + ITEM_W + GAP &&
                     left + ITEM_W + GAP > p.left &&
                     top  < p.top  + ITEM_H + GAP &&
                     top  + ITEM_H + GAP   > p.top
                 );
+                const overlapsWidget = isInWidgetZone(left, top, ITEM_W, ITEM_H, H);
 
-                if (!overlaps) {
+                if (!overlapsAnimal && !overlapsWidget) {
                     pos = { left, top };
                     break;
                 }
